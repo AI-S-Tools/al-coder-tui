@@ -9,7 +9,6 @@ import (
 	"strings"
 
 	tea "github.com/charmbracelet/bubbletea"
-	"github.com/cli/go-gh/v2/pkg/api"
 )
 
 func (m *Model) loadGitHubConfig() {
@@ -37,7 +36,6 @@ func (m *Model) saveGitHubConfig() error {
 	configDir := filepath.Join(homeDir, ".ai-cli-manager")
 	configPath := filepath.Join(configDir, "config.json")
 
-	// Create config directory if it doesn't exist
 	if err := os.MkdirAll(configDir, 0755); err != nil {
 		return err
 	}
@@ -62,13 +60,9 @@ func (m Model) checkGitHubCLI() tea.Cmd {
 	return func() tea.Msg {
 		cmd := exec.Command("gh", "--version")
 		if err := cmd.Run(); err != nil {
-			// Try to install gh if not present
-			installCmd := exec.Command("brew", "install", "gh")
-			if installCmd.Run() != nil {
-				return githubSyncMsg{
-					success: false,
-					err:     fmt.Errorf("GitHub CLI (gh) is not installed. Please install it first"),
-				}
+			return githubSyncMsg{
+				success: false,
+				err:     fmt.Errorf("GitHub CLI (gh) is not installed. Please install it first"),
 			}
 		}
 		return nil
@@ -84,40 +78,11 @@ func (m Model) syncWithGitHub() tea.Cmd {
 			}
 		}
 
-		// Create or update the repository
-		repoName := fmt.Sprintf("%s/%s", m.githubUser, m.githubRepo)
-
-		// Check if repo exists
-		client, err := api.DefaultRESTClient()
-		if err != nil {
-			return githubSyncMsg{success: false, err: err}
-		}
-
-		// Check if repo exists
-		err = client.Get(fmt.Sprintf("repos/%s", repoName), nil)
-		if err != nil {
-			// Create private repository
-			// Create repo using gh CLI
-			cmd := exec.Command("gh", "repo", "create", repoName, "--private", "-d", "AI CLI Manager Configuration")
-			err = cmd.Run()
-			if err != nil {
-				return githubSyncMsg{success: false, err: err}
-			}
-		}
-
-		// Save tools configuration as JSON
 		data, err := json.MarshalIndent(m.tools, "", "  ")
 		if err != nil {
 			return githubSyncMsg{success: false, err: err}
 		}
 
-		// Create temp file
-		tmpFile := "/tmp/ai-tools-config.json"
-		if err := os.WriteFile(tmpFile, data, 0644); err != nil {
-			return githubSyncMsg{success: false, err: err}
-		}
-
-		// Create gist or update repository file
 		gistCmd := fmt.Sprintf("echo '%s' | gh gist create -f ai-tools.json -d 'AI CLI Tools Configuration' -", string(data))
 		cmd := exec.Command("sh", "-c", gistCmd)
 		if err := cmd.Run(); err != nil {
@@ -137,14 +102,12 @@ func (m *Model) pullFromGitHub() tea.Cmd {
 			}
 		}
 
-		// List gists and find the configuration
 		cmd := exec.Command("gh", "gist", "list", "--limit", "100")
 		output, err := cmd.Output()
 		if err != nil {
 			return githubSyncMsg{success: false, err: err}
 		}
 
-		// Parse output to find our config gist
 		lines := strings.Split(string(output), "\n")
 		var gistID string
 		for _, line := range lines {
@@ -164,20 +127,17 @@ func (m *Model) pullFromGitHub() tea.Cmd {
 			}
 		}
 
-		// Download the gist
 		cmd = exec.Command("gh", "gist", "view", gistID, "-f", "ai-tools.json")
 		output, err = cmd.Output()
 		if err != nil {
 			return githubSyncMsg{success: false, err: err}
 		}
 
-		// Parse the tools
 		var tools []AITool
 		if err := json.Unmarshal(output, &tools); err != nil {
 			return githubSyncMsg{success: false, err: err}
 		}
 
-		// Update local tools
 		m.tools = tools
 		saveAITools(tools)
 
@@ -190,7 +150,6 @@ func (m Model) installFromGitHub(tool AITool) error {
 		return fmt.Errorf("no GitHub repository specified")
 	}
 
-	// Clone the repository
 	tempDir := filepath.Join("/tmp", "ai-cli-install", tool.Name)
 	os.RemoveAll(tempDir)
 	defer os.RemoveAll(tempDir)
@@ -200,7 +159,6 @@ func (m Model) installFromGitHub(tool AITool) error {
 		return fmt.Errorf("failed to clone repository: %w", err)
 	}
 
-	// Look for installation script or use standard commands
 	installScripts := []string{
 		filepath.Join(tempDir, "install.sh"),
 		filepath.Join(tempDir, "scripts/install.sh"),
@@ -215,23 +173,19 @@ func (m Model) installFromGitHub(tool AITool) error {
 		}
 	}
 
-	// Try standard installation methods
 	if _, err := os.Stat(filepath.Join(tempDir, "package.json")); err == nil {
-		// Node.js project
 		cmd := exec.Command("npm", "install", "-g", ".")
 		cmd.Dir = tempDir
 		return cmd.Run()
 	}
 
 	if _, err := os.Stat(filepath.Join(tempDir, "setup.py")); err == nil {
-		// Python project
 		cmd := exec.Command("pip", "install", ".")
 		cmd.Dir = tempDir
 		return cmd.Run()
 	}
 
 	if _, err := os.Stat(filepath.Join(tempDir, "go.mod")); err == nil {
-		// Go project
 		cmd := exec.Command("go", "install", ".")
 		cmd.Dir = tempDir
 		return cmd.Run()

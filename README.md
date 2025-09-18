@@ -1,18 +1,10 @@
 # AI CLI Manager
 
-A sophisticated Terminal User Interface (TUI) application for managing AI-powered CLI tools, their configurations, and MCP (Model Context Protocol) server setups.
+A sophisticated Terminal User Interface (TUI) application for managing CLI-based AI tools like Claude Code, Codex, Gemini CLI, and Qwen CLI, along with their configurations and MCP (Model Context Protocol) server setups.
 
 ## Features
 
-- **🤖 Tool Management**: Install and manage popular AI CLI tools
-  - Claude Code
-  - Aider
-  - Continue
-  - GitHub Copilot CLI
-  - Cursor
-  - Codeium
-  - Qodo
-  - Windsurf
+- **🤖 Tool Management**: Install and manage CLI-based AI tools like Codex, Gemini CLI, Claude Code, and Qwen CLI
 
 - **☁️ GitHub Sync**: Store and sync configurations using GitHub gists
 - **🔌 MCP Integration**: Automatically configure MCP servers for Claude Desktop

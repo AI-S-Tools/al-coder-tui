@@ -131,13 +131,16 @@ func NewModel() Model {
 		tools:         tools,
 		table:         t,
 		selected:      0,
-		mode:          "menu",
-		message:       "Welcome to AI CLI Manager!",
+		mode:          "table",
+		message:       "Welcome to AI CLI Manager! Press Esc for menu.",
 		mcpConfigPath: mcpPath,
 	}
 
 	// Load GitHub config
 	m.loadGitHubConfig()
+
+	// Initialize table data
+	m.updateTable()
 
 	return m
 }
@@ -233,11 +236,21 @@ func (m Model) View() string {
 	if m.mode == "table" {
 		help := lipgloss.NewStyle().
 			Foreground(lipgloss.Color("241")).
-			Render("↑/↓: Navigate • Enter: Install • M: Configure MCP • R: Refresh • Esc: Menu • Q: Quit")
+			Render("↑/↓: Navigate • Enter: Install selected • M: Configure MCP • R: Refresh status • Esc: Main menu • Q: Quit")
+
+		statusInfo := ""
+		installedCount := 0
+		for _, tool := range m.tools {
+			if tool.Installed {
+				installedCount++
+			}
+		}
+		statusInfo = fmt.Sprintf("Status: %d/%d tools installed", installedCount, len(m.tools))
 
 		return fmt.Sprintf(
-			"\n%s\n\n%s\n\n%s\n\n%s\n",
-			titleStyle.Render("AI CLI Tools"),
+			"\n%s\n\n%s\n\n%s\n%s\n\n%s\n",
+			titleStyle.Render("AI CLI Tools Manager"),
+			statusInfo,
 			m.table.View(),
 			m.message,
 			help,
@@ -267,21 +280,21 @@ GitHub: %s
 
 Choose an option:
 
-%s 1. View tools table
-%s 2. Install selected tools
-%s 3. Install all tools
-%s 4. Configure GitHub sync
-%s 5. Configure MCP servers
-%s 6. Update installation status
+%s 1. Return to tools table (main view)
+%s 2. Install all missing tools
+%s 3. Configure GitHub sync
+%s 4. Configure MCP servers
+%s 5. Refresh installation status
 
 %s Q. Quit
 
+Press 1 or Esc to return to the tools table.
+
 %s
 `,
-		titleStyle.Render("🤖 AI CLI Manager"),
+		titleStyle.Render("🤖 AI CLI Manager - Main Menu"),
 		successStyle.Render(statusText),
 		githubStatus,
-		selectedStyle.Render("→"),
 		selectedStyle.Render("→"),
 		selectedStyle.Render("→"),
 		selectedStyle.Render("→"),
