@@ -70,9 +70,10 @@ make fmt
 - **installing**: Installation progress display
 
 ### Navigation
-- **Menu Mode**: Number keys (1-6) to select options
-- **Table Mode**: Arrow keys to navigate, Enter to install, M for MCP config, R to refresh
-- **All Modes**: Q to quit, Esc to go back
+- **Default Start**: Application starts in Table View (main interface)
+- **Table Mode**: Arrow keys to navigate, Enter to install, M for MCP config, R to refresh, Esc for menu
+- **Menu Mode**: Number keys (1-5) to select options, 1 or Esc to return to table
+- **All Modes**: Q to quit
 
 ## MCP Server Integration
 

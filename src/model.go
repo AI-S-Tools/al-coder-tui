@@ -96,6 +96,13 @@ var (
 func NewModel() Model {
 	tools := loadAITools()
 
+	// Handle case where no tools are loaded
+	if len(tools) == 0 {
+		fmt.Println("Error: No tools found in ai_tools.json")
+		fmt.Println("Please ensure ai_tools.json exists and contains valid tool definitions.")
+		os.Exit(1)
+	}
+
 	columns := []table.Column{
 		{Title: "#", Width: 4},
 		{Title: "Name", Width: 20},

@@ -14,21 +14,19 @@ func (m Model) handleMenuInput(msg tea.KeyMsg) (tea.Model, tea.Cmd) {
 	switch msg.String() {
 	case "q", "ctrl+c":
 		return m, tea.Quit
-	case "1":
+	case "1", "esc":
 		m.mode = "table"
 		m.updateTable()
 		return m, nil
 	case "2":
-		return m, m.installSelected()
-	case "3":
 		return m, m.installAll()
-	case "4":
+	case "3":
 		m.mode = "config"
 		return m, nil
-	case "5":
+	case "4":
 		m.mode = "mcp"
 		return m, nil
-	case "6":
+	case "5":
 		m.mode = "table"
 		return m, checkInstallations(m.tools)
 	}
@@ -193,14 +191,22 @@ func (m Model) installTool(tool AITool) tea.Cmd {
 func (m *Model) updateTable() {
 	rows := []table.Row{}
 	for i, tool := range m.tools {
-		status := "❌"
+		status := "Not installed"
 		if tool.Installed {
-			status = "✅"
+			status = "✅ Installed"
+		} else {
+			status = "❌ Missing"
 		}
 
 		mcpStatus := "-"
 		if len(tool.MCPServers) > 0 {
-			mcpStatus = fmt.Sprintf("%d", len(tool.MCPServers))
+			mcpStatus = fmt.Sprintf("✅ %d", len(tool.MCPServers))
+		}
+
+		// Truncate description if too long
+		description := tool.Description
+		if len(description) > 35 {
+			description = description[:32] + "..."
 		}
 
 		rows = append(rows, table.Row{
@@ -209,7 +215,7 @@ func (m *Model) updateTable() {
 			tool.CLICommand,
 			status,
 			mcpStatus,
-			tool.Description,
+			description,
 		})
 	}
 	m.table.SetRows(rows)

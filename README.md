@@ -50,21 +50,22 @@ ai-cli-manager
 
 ### Navigation
 
-#### Main Menu
-- **1**: View tools table
-- **2**: Install selected tools
-- **3**: Install all tools
-- **4**: Configure GitHub sync
-- **5**: Configure MCP servers
-- **6**: Update installation status
-- **Q**: Quit
+The application starts in **Table View** (main interface) showing all available AI tools.
 
-#### Table View
+#### Table View (Main Interface)
 - **↑/↓**: Navigate through tools
 - **Enter**: Install selected tool
 - **M**: Configure MCP for selected tool
 - **R**: Refresh installation status
-- **Esc**: Return to menu
+- **Esc**: Go to main menu
+- **Q**: Quit
+
+#### Main Menu
+- **1** or **Esc**: Return to tools table
+- **2**: Install all missing tools
+- **3**: Configure GitHub sync
+- **4**: Configure MCP servers
+- **5**: Refresh installation status
 - **Q**: Quit
 
 ## Configuration
