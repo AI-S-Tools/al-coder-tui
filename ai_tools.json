@@ -33,20 +33,12 @@
     "github_repo": "https://github.com/google/generative-ai-cli"
   },
   {
-    "name": "OpenAI Codex CLI",
+    "name": "OpenAI Codex",
     "cli_command": "codex",
-    "install_cmd": "pip install openai-codex-cli",
+    "install_cmd": "pip install openai-codex",
     "check_cmd": "codex --version",
-    "description": "OpenAI's Codex code generation CLI",
-    "github_repo": "https://github.com/openai/codex-cli"
-  },
-  {
-    "name": "ChatGPT CLI",
-    "cli_command": "chatgpt",
-    "install_cmd": "npm install -g @chatgpt/cli",
-    "check_cmd": "chatgpt --version",
-    "description": "ChatGPT command-line interface",
-    "github_repo": "https://github.com/chatgpt-cli/chatgpt-cli"
+    "description": "OpenAI Codex code generation and completion",
+    "github_repo": "https://github.com/openai/openai-codex"
   },
   {
     "name": "Qwen CLI",
