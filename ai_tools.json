@@ -1,0 +1,218 @@
+[
+  {
+    "name": "Claude Code",
+    "cli_command": "claude",
+    "install_cmd": "npm install -g @anthropic/claude-cli",
+    "check_cmd": "claude --version",
+    "description": "Anthropic's Claude AI coding assistant",
+    "github_repo": "https://github.com/anthropics/claude-cli",
+    "mcp_servers": [
+      {
+        "name": "filesystem",
+        "command": "npx",
+        "args": ["-y", "@modelcontextprotocol/server-filesystem"],
+        "description": "File system access for Claude"
+      },
+      {
+        "name": "github",
+        "command": "npx",
+        "args": ["-y", "@modelcontextprotocol/server-github"],
+        "env": {
+          "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_TOKEN}"
+        },
+        "description": "GitHub integration for Claude"
+      }
+    ]
+  },
+  {
+    "name": "Aider",
+    "cli_command": "aider",
+    "install_cmd": "pip install aider-chat",
+    "check_cmd": "aider --version",
+    "description": "AI pair programming in your terminal",
+    "github_repo": "https://github.com/paul-gauthier/aider",
+    "mcp_servers": [
+      {
+        "name": "git",
+        "command": "npx",
+        "args": ["-y", "@modelcontextprotocol/server-git"],
+        "description": "Git integration for AI tools"
+      }
+    ]
+  },
+  {
+    "name": "Continue",
+    "cli_command": "continue",
+    "install_cmd": "npm install -g continue",
+    "check_cmd": "continue --version",
+    "description": "Open-source AI code assistant",
+    "github_repo": "https://github.com/continuedev/continue",
+    "mcp_servers": [
+      {
+        "name": "sqlite",
+        "command": "npx",
+        "args": ["-y", "@modelcontextprotocol/server-sqlite"],
+        "description": "SQLite database access"
+      }
+    ]
+  },
+  {
+    "name": "GitHub Copilot CLI",
+    "cli_command": "gh-copilot",
+    "install_cmd": "gh extension install github/gh-copilot",
+    "check_cmd": "gh copilot --version",
+    "description": "GitHub Copilot command-line interface"
+  },
+  {
+    "name": "Codeium",
+    "cli_command": "codeium",
+    "install_cmd": "curl -Ls https://github.com/Exafunction/codeium/releases/latest/download/install.sh | bash",
+    "check_cmd": "codeium --version",
+    "description": "Free AI code completion",
+    "github_repo": "https://github.com/Exafunction/codeium-cli"
+  },
+  {
+    "name": "Cursor",
+    "cli_command": "cursor",
+    "install_cmd": "brew install --cask cursor",
+    "check_cmd": "cursor --version",
+    "description": "AI-powered code editor",
+    "mcp_servers": [
+      {
+        "name": "typescript",
+        "command": "npx",
+        "args": ["-y", "@modelcontextprotocol/server-typescript"],
+        "description": "TypeScript language server"
+      },
+      {
+        "name": "python",
+        "command": "uvx",
+        "args": ["mcp-server-python"],
+        "description": "Python language server"
+      }
+    ]
+  },
+  {
+    "name": "Qodo",
+    "cli_command": "qodo",
+    "install_cmd": "npm install -g @qodo/cli",
+    "check_cmd": "qodo --version",
+    "description": "AI test generation and code quality",
+    "github_repo": "https://github.com/qodo-ai/qodo-cli"
+  },
+  {
+    "name": "Windsurf",
+    "cli_command": "windsurf",
+    "install_cmd": "brew install --cask windsurf",
+    "check_cmd": "windsurf --version",
+    "description": "Codeium's AI-powered IDE"
+  },
+  {
+    "name": "Ollama",
+    "cli_command": "ollama",
+    "install_cmd": "brew install ollama",
+    "check_cmd": "ollama --version",
+    "description": "Run large language models locally",
+    "mcp_servers": [
+      {
+        "name": "ollama",
+        "command": "npx",
+        "args": ["-y", "mcp-server-ollama"],
+        "description": "Ollama model server"
+      }
+    ]
+  },
+  {
+    "name": "LM Studio CLI",
+    "cli_command": "lms",
+    "install_cmd": "brew install --cask lm-studio",
+    "check_cmd": "lms --version",
+    "description": "Local LLM management"
+  },
+  {
+    "name": "Sourcegraph Cody",
+    "cli_command": "cody",
+    "install_cmd": "brew install sourcegraph/cody/cody-cli",
+    "check_cmd": "cody --version",
+    "description": "Sourcegraph's AI coding assistant",
+    "github_repo": "https://github.com/sourcegraph/cody-cli"
+  },
+  {
+    "name": "Amazon Q",
+    "cli_command": "q",
+    "install_cmd": "brew install --cask amazon-q",
+    "check_cmd": "q --version",
+    "description": "Amazon's AI developer assistant"
+  },
+  {
+    "name": "Tabnine CLI",
+    "cli_command": "tabnine",
+    "install_cmd": "curl -fsSL https://raw.githubusercontent.com/codota/tabnine-cli/master/install.sh | bash",
+    "check_cmd": "tabnine --version",
+    "description": "AI code completion",
+    "github_repo": "https://github.com/codota/tabnine-cli"
+  },
+  {
+    "name": "Pieces CLI",
+    "cli_command": "pieces",
+    "install_cmd": "brew install pieces-cli",
+    "check_cmd": "pieces --version",
+    "description": "AI-powered code snippet manager"
+  },
+  {
+    "name": "Mentat",
+    "cli_command": "mentat",
+    "install_cmd": "pip install mentat",
+    "check_cmd": "mentat --version",
+    "description": "AI coding assistant with context awareness",
+    "github_repo": "https://github.com/AbanteAI/mentat"
+  },
+  {
+    "name": "GPT Engineer",
+    "cli_command": "gpt-engineer",
+    "install_cmd": "pip install gpt-engineer",
+    "check_cmd": "gpt-engineer --version",
+    "description": "AI engineer that builds entire codebases",
+    "github_repo": "https://github.com/gpt-engineer-org/gpt-engineer"
+  },
+  {
+    "name": "Smol Developer",
+    "cli_command": "smol-dev",
+    "install_cmd": "pip install smol-developer",
+    "check_cmd": "smol-dev --version",
+    "description": "Smallest AI developer",
+    "github_repo": "https://github.com/smol-ai/developer"
+  },
+  {
+    "name": "Auto-GPT",
+    "cli_command": "autogpt",
+    "install_cmd": "pip install auto-gpt",
+    "check_cmd": "autogpt --version",
+    "description": "Autonomous GPT-4 agent",
+    "github_repo": "https://github.com/Significant-Gravitas/AutoGPT"
+  },
+  {
+    "name": "Open Interpreter",
+    "cli_command": "interpreter",
+    "install_cmd": "pip install open-interpreter",
+    "check_cmd": "interpreter --version",
+    "description": "Natural language interface for computers",
+    "github_repo": "https://github.com/OpenInterpreter/open-interpreter",
+    "mcp_servers": [
+      {
+        "name": "code-execution",
+        "command": "npx",
+        "args": ["-y", "mcp-server-code-execution"],
+        "description": "Safe code execution environment"
+      }
+    ]
+  },
+  {
+    "name": "Sweep AI",
+    "cli_command": "sweep",
+    "install_cmd": "pip install sweep-ai",
+    "check_cmd": "sweep --version",
+    "description": "AI-powered code reviewer",
+    "github_repo": "https://github.com/sweepai/sweep"
+  }
+]
